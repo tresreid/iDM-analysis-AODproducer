@@ -99,7 +99,7 @@ do
         --datatier GEN-SIM-DIGI-RAW --eventcontent PREMIXRAW \
         --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer17PrePremix-PUAutumn18_102X_upgrade2018_realistic_v15-v1/GEN-SIM-DIGI-RAW" \
         --number ${nevent} \
-        --geometry DB:Extended --nThreads 8 \
+        --geometry DB:Extended --nThreads 1 \
         --python_filename ${namebase}_DIGIRAWHLT_cfg_ctau-${ctau_mm}.py \
         --customise Configuration/DataProcessing/Utils.addMonitoring \
         --no_exec
@@ -112,7 +112,7 @@ do
         --mc --eventcontent AODSIM --datatier AODSIM --runUnscheduled \
         --conditions 102X_upgrade2018_realistic_v15 --step RAW2DIGI,L1Reco,RECO,RECOSIM,EI \
         --procModifiers premix_stage2 \
-        --nThreads 8 --era Run2_2018 --python_filename ${namebase}_AOD_cfg_ctau-${ctau_mm}.py --no_exec \
+        --nThreads 1 --era Run2_2018 --python_filename ${namebase}_AOD_cfg_ctau-${ctau_mm}.py --no_exec \
         --customise Configuration/DataProcessing/Utils.addMonitoring -n ${nevent}
     #cmsRun -p ${namebase}_AOD_cfg_ctau-${ctau_mm}.py
 
