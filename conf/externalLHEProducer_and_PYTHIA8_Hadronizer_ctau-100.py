@@ -168,7 +168,7 @@ tmpAk4GenJetsNoNu = cms.EDProducer("FastjetJetProducer",
 
 genHTFilter = cms.EDFilter("GenHTFilter",
         src = cms.InputTag("tmpAk4GenJetsNoNu"), #GenJet collection as input
-        jetPtCut = cms.double(30.0), #GenJet pT cut for HT
+        jetPtCut = cms.double(80.0), #GenJet pT cut for HT
         jetEtaCut = cms.double(5.0), #GenJet eta cut for HT
         genHTcut = cms.double(80.0) #genHT cut
         )

@@ -18,7 +18,7 @@
 
 nevent=1000
 
-SAMPLEDIR="/store/group/lpcmetx/iDM/LHE/2018/signal/iDM_Mchi-6p0_dMchi-2p0/"
+SAMPLELHE="/store/group/lpcmetx/iDM/LHE/2018/signal/iDM_Mchi-60p0_dMchi-20p0.lhe"
 
 HADRONIZER="externalLHEProducer_and_PYTHIA8_Hadronizer"
 export BASEDIR=`pwd`
@@ -40,11 +40,11 @@ scram b -j 4
 #rm -rf *
 mkdir -p Configuration/GenProduction/python/
 
-function join_by { local IFS="$1"; shift; echo "$*"; }
-
-file_list=`eosls ${SAMPLEDIR}/*.lhe | sed "s|^|${SAMPLEDIR}|"`
-all_files=`join_by , $file_list`
-echo $all_files
+#function join_by { local IFS="$1"; shift; echo "$*"; }
+#
+#file_list=`eosls ${SAMPLEDIR}/*.lhe | sed "s|^|${SAMPLEDIR}|"`
+#all_files=`join_by , $file_list`
+#echo $all_files
 #for file in $files; do
 #    echo "/store/group/lpcmetx/iDM/LHE/2018/signal/iDM_Mchi-6p0_dMchi-2p0/$file"
 #done
@@ -61,7 +61,8 @@ do
     echo "1.) Generating GEN-SIM for lifetime ${ctau_mm}"
     genfragment=${namebase}_GENSIM_cfg_ctau-${ctau_mm}.py
     cmsDriver.py Configuration/GenProduction/python/${HADRONIZER}_ctau-${ctau_mm}.py \
-        --filein [$all_files] \
+        #--filein [$all_files] \
+        --filein $SAMPLELHE \
         --filetype LHE \
         --fileout file:${namebase}_GENSIM_ctau-${ctau_mm}.root \
         --mc --eventcontent RAWSIM --datatier GEN-SIM \
@@ -70,8 +71,8 @@ do
         --customise Configuration/DataProcessing/Utils.addMonitoring \
         --python_filename ${genfragment} --no_exec -n ${nevent}
 
-    sed -i -e "s/'\[/\['/" ${genfragment}
-    sed -i -e "s/\]'/'\]/" ${genfragment}
+    #sed -i -e "s/'\[/\['/" ${genfragment}
+    #sed -i -e "s/\]'/'\]/" ${genfragment}
 
     #Make each file unique to make later publication possible
     linenumber=`grep -n 'process.source' ${genfragment} | awk '{print $1}'`
